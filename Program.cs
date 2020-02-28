@@ -1,5 +1,8 @@
-﻿using Sample;
+﻿using System;
+using Sample;
 using Encoder;
+using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace TP2
 {
@@ -8,10 +11,11 @@ namespace TP2
         static void Main(string[] args)
         {
             /* Exercice 1 */
-            A instance = new A();
-            MyJSON.Serialize(instance);
+            B instance = new B();
+            Dictionary<string, object> test = MyJSON.Serialize(instance);
+            string json = JsonConvert.SerializeObject(test, Formatting.Indented);
+            Console.Write(json);
 
-            /* Exercice 2 */
         }
     }
 }

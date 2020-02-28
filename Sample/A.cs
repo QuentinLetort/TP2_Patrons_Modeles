@@ -1,11 +1,20 @@
+using System.Collections.Generic;
 namespace Sample
 {
     public class A
     {
-        public int val;
+        private double val;
+        private string[] tabStr;
+        public Queue<string> queueStr;
         public A()
         {
-            val = 7;
+            val = 7.9;
+            tabStr = new string[] { "abc", "def", "ghi" };
+            queueStr = new Queue<string>();
+            queueStr.Enqueue("Hello");
+            queueStr.Enqueue("World");
+            queueStr.Enqueue("!");
         }
+
     }
 }

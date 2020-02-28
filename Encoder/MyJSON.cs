@@ -15,9 +15,10 @@ namespace Encoder
 
         }
 
-        private static object SerializeInternal(object obj) {
+        private static object SerializeInternal(object obj)
+        {
             Type objType = obj.GetType();
-            if (objType.IsPrimitive)
+            if (objType.IsPrimitive || objType.Equals(typeof(string)))
             {
                 return obj;
             }
@@ -25,21 +26,23 @@ namespace Encoder
             IEnumerable<FieldInfo> fieldsInfo = objType.GetRuntimeFields();
             foreach (FieldInfo field in fieldsInfo)
             {
-                if (field.GetValue(obj) is Array || field.GetValue(obj) is IEnumerable)
+                object fieldValue = field.GetValue(obj);
+                if (!(fieldValue is String) && (fieldValue is Array || fieldValue is IEnumerable))
                 {
                     List<object> data = new List<object>();
-                    IEnumerator enumerator = ((IEnumerable)field.GetValue(obj)).GetEnumerator();
-                    enumerator.Reset();
+                    IEnumerator enumerator = ((IEnumerable)fieldValue).GetEnumerator();
                     while (enumerator.MoveNext())
                     {
                         data.Add(SerializeInternal(enumerator.Current));
                     }
                     result.Add(field.Name, data.ToArray());
                 }
-                result.Add(field.Name, SerializeInternal(field.GetValue(obj)));
+                else
+                {
+                    result.Add(field.Name, SerializeInternal(fieldValue));
+                }
             }
             return result;
-
         }
 
     }
