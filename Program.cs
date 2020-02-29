@@ -8,14 +8,13 @@ namespace TP2
 {
     class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             /* Exercice 1 */
-            B instance = new B();
-            Dictionary<string, object> test = MyJSON.Serialize(instance);
-            string json = JsonConvert.SerializeObject(test, Formatting.Indented);
-            Console.Write(json);
-
+            D d = new D();
+            Dictionary<string, object> dict = MyJSON.Serialize(d);
+            Console.Write(JsonConvert.SerializeObject(dict, Formatting.Indented));
         }
     }
+
 }

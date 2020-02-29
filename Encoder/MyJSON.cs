@@ -2,48 +2,56 @@ using System;
 using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
-
+using Extension;
 
 namespace Encoder
 {
     public class MyJSON
     {
-
         public static Dictionary<string, object> Serialize(object obj)
         {
-            return (Dictionary<string, object>)SerializeInternal(obj);
-
-        }
-
-        private static object SerializeInternal(object obj)
-        {
-            Type objType = obj.GetType();
-            if (objType.IsPrimitive || objType.Equals(typeof(string)))
+            Dictionary<string, object> result = null;
+            if (obj != null)
             {
-                return obj;
-            }
-            Dictionary<string, object> result = new Dictionary<string, object>();
-            IEnumerable<FieldInfo> fieldsInfo = objType.GetRuntimeFields();
-            foreach (FieldInfo field in fieldsInfo)
-            {
-                object fieldValue = field.GetValue(obj);
-                if (!(fieldValue is String) && (fieldValue is Array || fieldValue is IEnumerable))
+                result = new Dictionary<string, object>();
+                // Récupération de tous les champs définis sur le type spécifié y compris les champs hérités et privés
+                IEnumerable<FieldInfo> fields = obj.GetType().getAllFields();
+                foreach (FieldInfo field in fields)
                 {
-                    List<object> data = new List<object>();
-                    IEnumerator enumerator = ((IEnumerable)fieldValue).GetEnumerator();
-                    while (enumerator.MoveNext())
-                    {
-                        data.Add(SerializeInternal(enumerator.Current));
-                    }
-                    result.Add(field.Name, data.ToArray());
-                }
-                else
-                {
-                    result.Add(field.Name, SerializeInternal(fieldValue));
+                    result.Add(field.Name, SerializeInternal(field.GetValue(obj)));
                 }
             }
             return result;
         }
-
+        private static object SerializeInternal(object data)
+        {
+            object result = null;
+            if (data != null)
+            {
+                Type dataType = data.GetType();
+                // Condition d'arrêt de la récursion: data est un type primitif ou une string
+                if (dataType.IsPrimitive || dataType.Equals(typeof(string)))
+                {
+                    result = data;
+                }
+                // cas où data est un IEnumerable (tableau compris)
+                else if (typeof(IEnumerable).IsAssignableFrom(dataType))
+                {
+                    List<object> dataList = new List<object>();
+                    IEnumerator enumerator = ((IEnumerable)data).GetEnumerator();
+                    while (enumerator.MoveNext())
+                    {
+                        dataList.Add(SerializeInternal(enumerator.Current));
+                    }
+                    result = dataList.ToArray();
+                }
+                // cas où data est un autre type d'objet
+                else
+                {
+                    result = Serialize(data);
+                }
+            }
+            return result;
+        }
     }
 }
