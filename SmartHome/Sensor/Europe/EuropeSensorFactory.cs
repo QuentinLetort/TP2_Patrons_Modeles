@@ -2,11 +2,11 @@ namespace SmartHome.Sensor.Europe
 {
     public class EuropeSensorFactory : SensorFactory
     {
-        public Sensor CreateThermometer()
+        public Thermometer CreateThermometer()
         {
             return new EuropeThermometer();
         }
-        public Sensor CreateBarometer()
+        public Barometer CreateBarometer()
         {
             return new EuropeBarometer();
         }

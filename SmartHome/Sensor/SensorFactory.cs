@@ -2,7 +2,7 @@ namespace SmartHome.Sensor
 {
     public interface SensorFactory
     {
-        Sensor CreateThermometer();
-        Sensor CreateBarometer();
+        Thermometer CreateThermometer();
+        Barometer CreateBarometer();
     }
 }
