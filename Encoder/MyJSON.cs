@@ -14,8 +14,8 @@ namespace Encoder
             if (obj != null)
             {
                 result = new Dictionary<string, object>();
-                // Récupération de tous les champs définis sur le type spécifié y compris les champs hérités et privés
-                IEnumerable<FieldInfo> fields = obj.GetType().getAllFields();
+                // Récupération de tous les champs définis sur le type spécifié y compris les champs hérités et privés (extension proposée)
+                IEnumerable<FieldInfo> fields = obj.GetType().GetAllFields();
                 foreach (FieldInfo field in fields)
                 {
                     result.Add(field.Name, SerializeInternal(field.GetValue(obj)));

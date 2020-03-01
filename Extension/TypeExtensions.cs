@@ -7,7 +7,7 @@ namespace Extension
 {
     public static class TypeExtensions
     {
-        public static IEnumerable<FieldInfo> getAllFields(this Type type)
+        public static IEnumerable<FieldInfo> GetAllFields(this Type type)
         {
             List<FieldInfo> fields = new List<FieldInfo>();
             for (Type t = type; t != null; t = t.BaseType)

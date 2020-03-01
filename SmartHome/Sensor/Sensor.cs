@@ -1,4 +1,4 @@
-namespace SmartHome
+namespace SmartHome.Sensor
 {
     public interface Sensor
     {
