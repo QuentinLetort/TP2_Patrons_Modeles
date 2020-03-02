@@ -2,7 +2,7 @@ using System;
 using SmartHome.Enumerations;
 using Extension;
 
-namespace SmartHome.Sensor.Europe
+namespace SmartHome.Sensors.Europe
 {
     [Sensor(PhysicalProperty.Temperature, PhysicalUnit.Celsius)]
     public class EuropeThermometer : Thermometer

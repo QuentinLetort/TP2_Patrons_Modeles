@@ -1,6 +1,6 @@
 using System;
 using SmartHome.Enumerations;
-namespace SmartHome.Sensor
+namespace SmartHome.Sensors
 {
     public class SensorAttribute : Attribute
     {

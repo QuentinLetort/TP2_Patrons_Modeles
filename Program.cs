@@ -3,8 +3,9 @@ using Sample;
 using Encoder;
 using System.Collections.Generic;
 using Newtonsoft.Json;
-using SmartHome.Sensor.USA;
-using SmartHome.Sensor.Europe;
+using SmartHome;
+using SmartHome.Sensors.USA;
+
 
 namespace TP2
 {
@@ -13,7 +14,7 @@ namespace TP2
         public static void Main(string[] args)
         {
             Exercice1();
-            Exercice2();
+            //Exercice2();            
         }
         public static void Exercice1()
         {
@@ -26,10 +27,12 @@ namespace TP2
         public static void Exercice2()
         {
             Console.WriteLine("Exercice 2 : Flux de données dynamiques de capteurs");
-            EuropeThermometer th = new EuropeThermometer();
-            th.Sense();
-            Console.WriteLine(th.Temperature);
-            Console.WriteLine();
+            SensorManager manager = new SensorManager();
+            USASensorFactory usaFactory = new USASensorFactory();
+            
+            manager.AddSensor(usaFactory.CreateThermometer());
+            manager.RunSensors();
+
         }
 
     }

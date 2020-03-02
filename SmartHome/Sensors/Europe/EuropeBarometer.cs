@@ -2,7 +2,7 @@ using System;
 using SmartHome.Enumerations;
 using Extension;
 
-namespace SmartHome.Sensor.Europe
+namespace SmartHome.Sensors.Europe
 {
     [Sensor(PhysicalProperty.Pressure, PhysicalUnit.Pascal)]
     public class EuropeBarometer : Barometer

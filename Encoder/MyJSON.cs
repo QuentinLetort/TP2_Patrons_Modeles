@@ -23,6 +23,7 @@ namespace Encoder
             }
             return result;
         }
+        // Méthode récursive
         private static object SerializeInternal(object data)
         {
             object result = null;

@@ -1,4 +1,4 @@
-namespace SmartHome.Sensor.Europe
+namespace SmartHome.Sensors.Europe
 {
     public class EuropeSensorFactory : SensorFactory
     {

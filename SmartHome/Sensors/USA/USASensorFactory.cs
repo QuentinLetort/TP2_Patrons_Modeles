@@ -1,4 +1,4 @@
-namespace SmartHome.Sensor.USA
+namespace SmartHome.Sensors.USA
 {
     public class USASensorFactory : SensorFactory
     {
