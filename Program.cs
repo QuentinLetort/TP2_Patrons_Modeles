@@ -13,8 +13,8 @@ namespace TP2
     {
         public static void Main(string[] args)
         {
-            Exercice1();
-            //Exercice2();            
+            //Exercice1();
+            Exercice2();            
         }
         public static void Exercice1()
         {

@@ -17,6 +17,7 @@ namespace SmartHome
         public SensorManager()
         {
             this.dictSensorsVisualizer = new Dictionary<Sensor, Visualizer>();
+            this.converterTypes = new Dictionary<Enumerations.PhysicalUnit, Type>();
             this.factory = new VisualizerFactory();
             this.running = false;
             findConverters();
@@ -29,6 +30,7 @@ namespace SmartHome
                 if (IsConverterRequired(sensor, visualizer))
                 {
                     visualizer = createConverter(sensor, visualizer);
+                    ConverterAttribute converterAttribute = (ConverterAttribute)visualizer.GetType().GetCustomAttribute(typeof(ConverterAttribute));
                 }
                 dictSensorsVisualizer.Add(sensor, visualizer);
             }
@@ -74,11 +76,7 @@ namespace SmartHome
         {
             foreach (Type converterType in typeof(Converter).Assembly.GetTypes())
             {
-                Console.WriteLine(converterType.AssemblyQualifiedName);
-
                 ConverterAttribute converterAttribute = (ConverterAttribute)converterType.GetCustomAttribute(typeof(ConverterAttribute));
-                Console.WriteLine(converterAttribute);
-
                 if (converterAttribute != null)
                 {
                     converterTypes.Add(converterAttribute.input, converterType);
@@ -100,6 +98,8 @@ namespace SmartHome
         {
             SensorAttribute sensorAttribute = (SensorAttribute)sensor.GetType().GetCustomAttribute(typeof(SensorAttribute));
             Type converterType = converterTypes[sensorAttribute.unit];
+            ConverterAttribute converterAttribute = (ConverterAttribute)converterType.GetCustomAttribute(typeof(ConverterAttribute));
+            visualizer.Unit = converterAttribute.output;
             return (Converter)Activator.CreateInstance(converterType, sensor, visualizer);
         }
     }
